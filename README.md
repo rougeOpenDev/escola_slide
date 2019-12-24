@@ -1,13 +1,11 @@
 # frete-facil
 Front-end Flutter para gerenciamento de fretes e caminhoneiros em transportadoras
-<<<<<<< HEAD
-=======
 
-# frete_facil
+## frete_facil
 
 A new Flutter project.
 
-## Getting Started
+### Getting Started
 
 This project is a starting point for a Flutter application.
 
@@ -24,4 +22,4 @@ samples, guidance on mobile development, and a full API reference.
     . ../../vEnvs/fretes/bin/activate
     export ANDROID_HOME="/Users/Shared/SDKs_Repositorios/Android/sdk"
     export PATH="$PATH:/Users/Shared/SDKs_Repositorios/Flutter/flutter_macos_v1.12.13+hotfix.5-stable/bin"
->>>>>>> Change folders
+
