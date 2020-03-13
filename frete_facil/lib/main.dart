@@ -1,5 +1,86 @@
 import 'package:flutter/material.dart';
 
+import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:frete_facil/models/user_repository.dart';
+import 'package:frete_facil/blocs/authentication_bloc.dart';
+import 'package:frete_facil/states/authentication_state.dart';
+import 'package:frete_facil/events/authentication_event.dart';
+
+import 'package:frete_facil/views/principal_page.dart';
+import 'package:frete_facil/views/login_page.dart';
+import 'package:frete_facil/views/splash_page.dart';
+import 'package:frete_facil/views/loading_indicator.dart';
+
+class SimpleBlocDelegate extends BlocDelegate {
+  @override
+  void onEvent(Bloc bloc, Object event) {
+    super.onEvent(bloc, event);
+    print(event);
+  }
+
+  @override
+  void onTransition(Bloc bloc, Transition transition) {
+    super.onTransition(bloc, transition);
+    print(transition);
+  }
+
+  @override
+  void onError(Bloc bloc, Object error, StackTrace stacktrace) {
+    super.onError(bloc, error, stacktrace);
+    print(error);
+  }
+}
+
+void main() {
+  BlocSupervisor.delegate = SimpleBlocDelegate();
+  final userRepository = UserRepository();
+
+  runApp(
+    BlocProvider<AuthenticationBloc>(
+      create: (context) {
+        return AuthenticationBloc(userRepository: userRepository)
+          ..add(AppStarted());
+      },
+      child: App(userRepository: userRepository),
+    ),
+  );
+}
+
+class App extends StatelessWidget {
+  final UserRepository userRepository;
+
+  App({Key key, @required this.userRepository}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+        builder: (context, state) {
+
+          if (state is AuthenticationAuthenticated) {
+            return PrincipalPage();
+          }
+
+          if (state is AuthenticationUnauthenticated) {
+            return LoginPage(userRepository: userRepository);
+          }
+
+          if (state is AuthenticationLoading) {
+            return LoadingIndicator();
+          }
+
+          return SplashPage();
+        },
+      ),
+    );
+  }
+}
+
+/*
+import 'package:flutter/material.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -7,7 +88,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Frete Pronto',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -18,9 +99,9 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.lightGreen,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Frete Pronto - Home'),
     );
   }
 }
@@ -109,3 +190,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+*/
