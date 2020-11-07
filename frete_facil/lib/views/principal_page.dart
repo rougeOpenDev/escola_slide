@@ -1,15 +1,38 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:frete_facil/blocs/authentication_bloc.dart';
 import 'package:frete_facil/events/authentication_event.dart';
-import 'package:frete_facil/models/user_repository.dart';
+import 'package:frete_facil/views/history_page.dart';
+import 'package:frete_facil/views/home_page.dart';
 import 'package:frete_facil/views/user_page.dart';
+import 'package:frete_facil/views/vistoria/nova_vistoria.dart';
 
-class PrincipalPage extends StatelessWidget {
+class PrincipalPage extends StatefulWidget{
+
+  _PrincipalPage createState()=> _PrincipalPage();
+}
+
+class _PrincipalPage extends State<PrincipalPage> {
+
+  int _currentIndex = 0;
+  final List<Widget> _children = [
+    HomePage(),
+    NovaVistoria(),
+    HistoryPage()
+  ];
+
+  void onTabTapped(int index) {
+
+   setState(() {
+     _currentIndex = index;
+   });
+ }
   
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Home'),
@@ -34,7 +57,7 @@ class PrincipalPage extends StatelessWidget {
               }
             ),
             new Divider(
-              color: Colors.blueGrey,
+              color: Theme.of(context).accentColor,
               height: 5.0,
             ),
             new ListTile(
@@ -46,10 +69,25 @@ class PrincipalPage extends StatelessWidget {
           ],
         )
       ),
-      body: Container(
-        child: Center(
-            child: Text('Bem Vindo, Nome Usuário!')
-        ),
+      body: _children[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: onTabTapped,
+        currentIndex: _currentIndex,
+        type: BottomNavigationBarType.fixed,
+        items: [
+          new BottomNavigationBarItem(
+            icon: new Icon(Icons.home),
+            title: new Text("Home"),
+          ),
+          new BottomNavigationBarItem(
+            icon: new Icon(Icons.add_circle_outline),
+            title: new Text("Nova Vistoria"),
+          ),
+          new BottomNavigationBarItem(
+            icon: new Icon(Icons.history),
+            title: new Text("Histórico"),
+          )
+        ]
       ),
     );
   }

@@ -56,6 +56,11 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Frete Pronto',
+      theme: new ThemeData(
+        primarySwatch: Colors.green,
+        accentColor: Colors.greenAccent
+      ),
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
 
