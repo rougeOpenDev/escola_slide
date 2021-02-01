@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:escola_slide/blocs/login_bloc.dart';
-import 'package:escola_slide/views/login_form.dart';
-import 'package:escola_slide/models/user_repository.dart';
 import 'package:escola_slide/blocs/authentication_bloc.dart';
+import 'package:escola_slide/views/login/login_form.dart';
+import 'package:escola_slide/models/user_repository.dart';
+import 'package:escola_slide/blocs/login_bloc.dart';
 
 class LoginPage extends StatelessWidget {
   final UserRepository userRepository;
@@ -18,7 +18,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login'),
+        title: Text('Salve'),
       ),
       body: BlocProvider(
         create: (context) {

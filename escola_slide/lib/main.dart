@@ -8,10 +8,10 @@ import 'package:escola_slide/blocs/authentication_bloc.dart';
 import 'package:escola_slide/states/authentication_state.dart';
 import 'package:escola_slide/events/authentication_event.dart';
 
-import 'package:escola_slide/views/principal_page.dart';
-import 'package:escola_slide/views/login_page.dart';
-import 'package:escola_slide/views/splash_page.dart';
 import 'package:escola_slide/views/loading_indicator.dart';
+import 'package:escola_slide/views/login/login_page.dart';
+import 'package:escola_slide/views/principal_page.dart';
+import 'package:escola_slide/views/splash_page.dart';
 
 class SimpleBlocDelegate extends BlocDelegate {
   @override

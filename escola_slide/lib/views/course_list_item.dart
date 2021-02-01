@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:escola_slide/models/entitys/user_car_survey_entity.dart';
-import 'package:escola_slide/models/user_car_survey_repository.dart';
+import 'package:escola_slide/models/entitys/course_entity.dart';
 
-class UserCarSurveyItem extends StatelessWidget {
-  final UserCarSurveyEntity _userCarSurveyItem;
+class CouseListItem extends StatelessWidget {
+  final CourseEntity _courseItem;
 
-  UserCarSurveyItem(this._userCarSurveyItem);
+  CouseListItem(this._courseItem);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +27,7 @@ class UserCarSurveyItem extends StatelessWidget {
             child: Container(
               width: double.infinity,
               height: 100,
-              child: Text(_userCarSurveyItem.description),
+              child: Text(_courseItem.label),
             ),
           ),
         )));

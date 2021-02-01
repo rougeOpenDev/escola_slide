@@ -1,41 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
-import 'package:escola_slide/models/entitys/user_car_survey_entity.dart';
-import 'package:escola_slide/models/user_car_survey_repository.dart';
-import 'package:escola_slide/views/user_car_survey_item.dart';
+import 'package:escola_slide/models/entitys/course_entity.dart';
+import 'package:escola_slide/models/course_repository.dart';
+import 'package:escola_slide/views/course_list_item.dart';
 
-class HomePage extends StatefulWidget {
+class CoursesPage extends StatefulWidget {
   @override
-  _HomePageState createState() => new _HomePageState();
+  _CoursesPageState createState() => new _CoursesPageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  final _userCarSurveyRepository = UserCarSurveyRepository();
-  List<UserCarSurveyEntity> _userCarSurveyItems;
+class _CoursesPageState extends State<CoursesPage> {
+  final _courseRepository = CourseRepository();
+  List<CourseEntity> _courseItems;
 
   @override
   void initState() {
     super.initState();
-    _userCarSurveyItems = _userCarSurveyRepository.getUserCarSurveys();
+    _courseItems = _courseRepository.getUserCourses();
   }
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('interno'),
+        title: new Text('Cursos'),
       ),
       body: AnimationLimiter(
         child: ListView.builder(
-          itemCount: _userCarSurveyItems.length,
+          itemCount: _courseItems.length,
           itemBuilder: (BuildContext context, int index) {
             return AnimationConfiguration.staggeredList(
               position: index,
               duration: const Duration(milliseconds: 375),
               child: ScaleAnimation(
                 child: FadeInAnimation(
-                  child: new UserCarSurveyItem(_userCarSurveyItems[index]),
+                  child: new CouseListItem(_courseItems[index]),
                 ),
               ),
             );
@@ -45,10 +45,10 @@ class _HomePageState extends State<HomePage> {
     );
 /*
       body: new ListView.builder(
-        itemCount: _userCarSurveyItems.length,
+        itemCount: _courseItems.length,
         itemBuilder: (context, index) {
 
-          var carSurveyItem = _userCarSurveyItems[index];
+          var carSurveyItem = _courseItems[index];
           return new Card(
 
             color: Theme.of(context).cardColor,
