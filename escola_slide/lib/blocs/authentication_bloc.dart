@@ -12,7 +12,8 @@ class AuthenticationBloc
   final UserRepository userRepository;
 
   AuthenticationBloc({@required this.userRepository})
-      : assert(userRepository != null);
+      : assert(userRepository != null),
+        super(null);
 
   @override
   AuthenticationState get initialState => AuthenticationUninitialized();

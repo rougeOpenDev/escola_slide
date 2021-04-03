@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:escola_slide/blocs/authentication_bloc.dart';
 import 'package:escola_slide/events/authentication_event.dart';
 import 'package:escola_slide/views/vistoria/nova_vistoria.dart';
+import 'package:escola_slide/views/confetti_page.dart';
 import 'package:escola_slide/views/history_page.dart';
 import 'package:escola_slide/views/courses_page.dart';
 import 'package:escola_slide/views/user_page.dart';
@@ -15,7 +16,7 @@ class PrincipalPage extends StatefulWidget {
 
 class _PrincipalPage extends State<PrincipalPage> {
   int _currentIndex = 0;
-  final List<Widget> _children = [CoursesPage(), NovaVistoria(), HistoryPage()];
+  final List<Widget> _children = [CoursesPage(), ConfettiPage(), HistoryPage()];
 
   void onTabTapped(int index) {
     setState(() {
@@ -27,8 +28,17 @@ class _PrincipalPage extends State<PrincipalPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Escola de Slide'),
-      ),
+          title: Row(children: [
+        Align(
+            alignment: Alignment.centerLeft,
+            child: Icon(Icons.play_circle_fill)),
+        Container(
+            margin: const EdgeInsets.only(left: 10.0),
+            child: Text(
+              'Left Align Button',
+              style: TextStyle(fontSize: 20.0),
+            )),
+      ])),
       drawer: new Drawer(
           child: ListView(
         children: <Widget>[

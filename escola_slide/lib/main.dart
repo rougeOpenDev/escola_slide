@@ -13,28 +13,34 @@ import 'package:escola_slide/views/login/login_page.dart';
 import 'package:escola_slide/views/principal_page.dart';
 import 'package:escola_slide/views/splash_page.dart';
 
-class SimpleBlocDelegate extends BlocDelegate {
+class SimpleBlocObserver extends BlocObserver {
   @override
-  void onEvent(Bloc bloc, Object event) {
-    super.onEvent(bloc, event);
-    print(event);
+  void onCreate(BlocBase bloc) {
+    super.onCreate(bloc);
+    print('onCreate -- ${bloc.runtimeType}');
   }
 
   @override
-  void onTransition(Bloc bloc, Transition transition) {
-    super.onTransition(bloc, transition);
-    print(transition);
+  void onChange(BlocBase bloc, Change change) {
+    super.onChange(bloc, change);
+    print('onChange -- ${bloc.runtimeType}, $change');
   }
 
   @override
-  void onError(Bloc bloc, Object error, StackTrace stacktrace) {
-    super.onError(bloc, error, stacktrace);
-    print(error);
+  void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
+    print('onError -- ${bloc.runtimeType}, $error');
+    super.onError(bloc, error, stackTrace);
+  }
+
+  @override
+  void onClose(BlocBase bloc) {
+    super.onClose(bloc);
+    print('onClose -- ${bloc.runtimeType}');
   }
 }
 
 void main() {
-  BlocSupervisor.delegate = SimpleBlocDelegate();
+  Bloc.observer = SimpleBlocObserver();
   final userRepository = UserRepository();
 
   runApp(
@@ -56,7 +62,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Frete Pronto',
+      title: 'Escola de Slide',
       theme: new ThemeData(
           primarySwatch: Colors.green, accentColor: Colors.greenAccent),
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
@@ -70,7 +76,8 @@ class App extends StatelessWidget {
           }
 
           if (state is AuthenticationLoading) {
-            return LoadingIndicator();
+            // return LoadingIndicator();
+            return SplashPage();
           }
 
           return SplashPage();
@@ -90,7 +97,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Frete Pronto',
+      title: 'Escola de Slide',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -103,7 +110,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.lightGreen,
       ),
-      home: MyHomePage(title: 'Frete Pronto - Home'),
+      home: MyHomePage(title: 'Escola de Slide - Home'),
     );
   }
 }
