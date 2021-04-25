@@ -4,6 +4,7 @@ class CourseEntity {
   final int order;
 
   final String label;
+  final String description;
   final String progress;
 
   final String image64;
@@ -14,6 +15,7 @@ class CourseEntity {
       {this.id,
       this.order,
       this.label,
+      this.description,
       this.progress,
       this.image64,
       this.active});
@@ -23,6 +25,7 @@ class CourseEntity {
         id: json['id'],
         order: json['order'],
         label: json['label'],
+        description: json['description'],
         progress: json['progress'],
         image64: json['image64'],
         active: json['active']);

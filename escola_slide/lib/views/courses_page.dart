@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'package:escola_slide/models/managers/courses_manager.dart';
 import 'package:escola_slide/models/entitys/course_entity.dart';
-import 'package:escola_slide/models/course_repository.dart';
 import 'package:escola_slide/views/course_list_item.dart';
 
 class CoursesPage extends StatefulWidget {
@@ -11,60 +12,79 @@ class CoursesPage extends StatefulWidget {
 }
 
 class _CoursesPageState extends State<CoursesPage> {
-  final _courseRepository = CourseRepository();
+  // final _courseRepository = ApiCourses();
   List<CourseEntity> _courseItems;
 
   @override
   void initState() {
     super.initState();
-    _courseItems = _courseRepository.getUserCourses();
   }
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text('Cursos'),
-      ),
-      body: AnimationLimiter(
-        child: ListView.builder(
-          itemCount: _courseItems.length,
-          itemBuilder: (BuildContext context, int index) {
-            return AnimationConfiguration.staggeredList(
-              position: index,
-              duration: const Duration(milliseconds: 375),
-              child: ScaleAnimation(
-                child: FadeInAnimation(
-                  child: new CouseListItem(_courseItems[index]),
-                ),
-              ),
-            );
-          },
+    var columnCount = 2;
+
+    return Consumer<CoursesManager>(builder: (_, coursesManager, __) {
+      _courseItems = coursesManager.courses;
+
+      if (coursesManager.loading) {
+        return Center(
+          child: CircularProgressIndicator(
+            valueColor:
+                AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+          ),
+        );
+      }
+
+      return new Scaffold(
+        appBar: new AppBar(
+          title: new Text('Cursos'),
         ),
-      ),
-    );
-/*
-      body: new ListView.builder(
-        itemCount: _courseItems.length,
-        itemBuilder: (context, index) {
-
-          var carSurveyItem = _courseItems[index];
-          return new Card(
-
-            color: Theme.of(context).cardColor,
-            //RoundedRectangleBorder, BeveledRectangleBorder, StadiumBorder
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(
-                  bottom: Radius.circular(10.0),
-                  top: Radius.circular(2.0)),
+        body: SafeArea(
+          child: AnimationLimiter(
+            child: GridView.extent(
+              primary: false,
+              padding: const EdgeInsets.all(16),
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+              maxCrossAxisExtent: 200.0,
+              children: List.generate(
+                _courseItems.length,
+                (int index) {
+                  return AnimationConfiguration.staggeredGrid(
+                    position: index,
+                    duration: const Duration(milliseconds: 375),
+                    columnCount: columnCount,
+                    child: SlideAnimation(
+                      child: FadeInAnimation(
+                        child: new CouseListItem(_courseItems[index]),
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
-            child: new UserCarSurveyItem(
-              carSurveyItem
-            )
-          );
-        },
-      )
-    );
-*/
+          ),
+        ),
+        /*
+        AnimationLimiter(
+          child: ListView.builder(
+            itemCount: _courseItems.length,
+            itemBuilder: (BuildContext context, int index) {
+              return AnimationConfiguration.staggeredList(
+                position: index,
+                duration: const Duration(milliseconds: 375),
+                child: ScaleAnimation(
+                  child: FadeInAnimation(
+                    child: new CouseListItem(_courseItems[index]),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+        */
+      );
+    });
   }
 }

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
-import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
+import 'package:bloc/bloc.dart';
 
-import 'package:escola_slide/models/user_repository.dart';
-import 'package:escola_slide/blocs/authentication_bloc.dart';
-import 'package:escola_slide/states/authentication_state.dart';
+import 'package:escola_slide/models/managers/courses_manager.dart';
 import 'package:escola_slide/events/authentication_event.dart';
+import 'package:escola_slide/states/authentication_state.dart';
+import 'package:escola_slide/blocs/authentication_bloc.dart';
+import 'package:escola_slide/models/user_repository.dart';
 
 import 'package:escola_slide/views/loading_indicator.dart';
 import 'package:escola_slide/views/login/login_page.dart';
@@ -61,29 +63,39 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Escola de Slide',
-      theme: new ThemeData(
-          primarySwatch: Colors.green, accentColor: Colors.greenAccent),
-      home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-        builder: (context, state) {
-          if (state is AuthenticationAuthenticated) {
-            return PrincipalPage();
-          }
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (_) => CoursesManager(),
+            lazy: true,
+          ),
+        ],
+        child: MaterialApp(
+          title: 'Escola de Slide',
+          debugShowCheckedModeBanner: false,
+          theme: new ThemeData(
+              primarySwatch: Colors.green,
+              accentColor: Colors.greenAccent,
+              visualDensity: VisualDensity.adaptivePlatformDensity),
+          home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+            builder: (context, state) {
+              if (state is AuthenticationAuthenticated) {
+                return PrincipalPage();
+              }
 
-          if (state is AuthenticationUnauthenticated) {
-            return LoginPage(userRepository: userRepository);
-          }
+              if (state is AuthenticationUnauthenticated) {
+                return LoginPage(userRepository: userRepository);
+              }
 
-          if (state is AuthenticationLoading) {
-            // return LoadingIndicator();
-            return SplashPage();
-          }
+              if (state is AuthenticationLoading) {
+                // return LoadingIndicator();
+                return SplashPage();
+              }
 
-          return SplashPage();
-        },
-      ),
-    );
+              return SplashPage();
+            },
+          ),
+        ));
   }
 }
 
