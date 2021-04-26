@@ -1,3 +1,5 @@
+import 'package:escola_slide/models/entitys/course_content_entity.dart';
+
 class CourseEntity {
   final String id;
 
@@ -11,6 +13,8 @@ class CourseEntity {
 
   final bool active;
 
+  final List<CourseContentEntity> contents;
+
   CourseEntity(
       {this.id,
       this.order,
@@ -18,7 +22,8 @@ class CourseEntity {
       this.description,
       this.progress,
       this.image64,
-      this.active});
+      this.active,
+      this.contents});
 
   factory CourseEntity.fromJson(Map<String, dynamic> json) {
     return new CourseEntity(
@@ -28,6 +33,7 @@ class CourseEntity {
         description: json['description'],
         progress: json['progress'],
         image64: json['image64'],
-        active: json['active']);
+        active: json['active'],
+        contents: []);
   }
 }

@@ -17,4 +17,20 @@ class ApiCourses {
 
     return response;
   }
+
+  Future<Response> getCourseContents(
+      Dio dio, String token, String courseId) async {
+    final Response response = await dio.get(
+      'https://api.jsonbin.io/b/60863e03c7df3422f7fdbc2f',
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json',
+          'secret-key': '$token'
+        },
+      ),
+    );
+
+    return response;
+  }
 }

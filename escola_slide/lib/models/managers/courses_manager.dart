@@ -14,11 +14,11 @@ class CoursesManager extends ChangeNotifier {
   bool _loading = false;
 
   CoursesManager() {
-    buscarCursos();
+    getAllCourses();
   }
 
-  Future<void> buscarCursos() async {
-    log('Buscando cursos . . .');
+  Future<void> getAllCourses() async {
+    log('Getting avalible courses . . .');
     loading = true;
     final Dio dio = Dio();
     // final token = await storage.read(key: 'token');

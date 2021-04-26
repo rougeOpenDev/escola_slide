@@ -1,25 +1,44 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 import 'package:dio/dio.dart';
+
+import 'dart:developer';
 
 import 'package:escola_slide/models/entitys/user_entitys.dart';
 import 'package:escola_slide/apis/api_user.dart';
 
-class UserRepository {
+class UserManager extends ChangeNotifier {
+  UserEntity _userData;
+  // final storage = const FlutterSecureStorage();
   final ApiUser endpointUser = ApiUser();
+  bool _loading = false;
 
-  Future<UserEntity> getUserData() async {
+  UserManager() {
+    getUserData();
+  }
+
+  Future<void> getUserData() async {
+    log('Getting user data . . .');
+    loading = true;
     final Dio dio = Dio();
     // final token = await storage.read(key: 'token');
     final response = await endpointUser.getUserData(
         dio, '\$2b\$10\$BZqF.T5fzqMKdPBpavvzAOoSGEh7GTRhLyJmhm3x.1VBNGWkmtEjq');
 
     if (response.statusCode == 200) {
-      return UserEntity.fromJson(response.data);
-    } else {
-      deleteToken();
-      return null;
-    }
+      _userData = UserEntity.fromJson(response.data);
+    } else {}
+
+    notifyListeners();
+    loading = false;
+  }
+
+  bool get loading => _loading;
+  UserEntity get user => _userData;
+
+  set loading(bool value) {
+    _loading = value;
+    notifyListeners();
   }
 
   Future<String> authenticate({

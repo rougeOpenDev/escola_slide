@@ -17,11 +17,7 @@ class PrincipalPage extends StatefulWidget {
 
 class _PrincipalPage extends State<PrincipalPage> {
   int _currentIndex = 0;
-  final List<Widget> _children = [
-    CoursesPage(),
-    ConfettiPage(),
-    LoginScreen3()
-  ];
+  final List<Widget> _children = [CoursesPage(), ConfettiPage(), UserPage()];
 
   void onTabTapped(int index) {
     setState(() {

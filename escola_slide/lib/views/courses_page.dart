@@ -1,6 +1,7 @@
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 import 'package:escola_slide/models/managers/courses_manager.dart';
 import 'package:escola_slide/models/entitys/course_entity.dart';
