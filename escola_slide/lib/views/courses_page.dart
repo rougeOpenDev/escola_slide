@@ -19,6 +19,8 @@ class _CoursesPageState extends State<CoursesPage> {
   @override
   void initState() {
     super.initState();
+
+    Provider.of<CoursesManager>(context, listen: false).getAllCourses();
   }
 
   @override

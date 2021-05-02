@@ -1,12 +1,11 @@
-import 'package:escola_slide/views/course_detail.dart';
 import 'package:flutter/material.dart';
 
 import 'package:escola_slide/models/entitys/course_entity.dart';
 
-class CouseListItem extends StatelessWidget {
+class CourseDetail extends StatelessWidget {
   final CourseEntity _courseItem;
 
-  CouseListItem(this._courseItem);
+  CourseDetail(this._courseItem);
 
   @override
   Widget build(BuildContext context) {
@@ -22,17 +21,9 @@ class CouseListItem extends StatelessWidget {
           ),
           child: InkWell(
             splashColor: Colors.blue.withAlpha(30),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) {
-                  return CourseDetail(_courseItem);
-                }),
-              );
-            },
             child: Container(
               width: double.infinity,
-              height: 100,
+              height: double.infinity,
               child: Text(_courseItem.label),
             ),
           ),

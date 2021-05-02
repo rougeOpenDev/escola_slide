@@ -54,15 +54,15 @@ class _PrincipalPage extends State<PrincipalPage> {
           items: [
             new BottomNavigationBarItem(
               icon: new Icon(Icons.menu),
-              title: new Text("Aulas"),
+              title: new Text("Pesquisar Cursos"),
             ),
             new BottomNavigationBarItem(
               icon: new Icon(Icons.home),
-              title: new Text("Home"),
+              title: new Text("Meus Cursos"),
             ),
             new BottomNavigationBarItem(
               icon: new Icon(Icons.history),
-              title: new Text("Seus Dados"),
+              title: new Text("Meus Dados"),
             )
           ]),
     );
