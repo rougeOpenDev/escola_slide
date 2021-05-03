@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 import 'package:escola_slide/models/entitys/course_entity.dart';
 
-class CouseListItem extends StatelessWidget {
+class CourseListItem extends StatelessWidget {
   final CourseEntity _courseItem;
 
-  CouseListItem(this._courseItem);
+  CourseListItem(this._courseItem);
 
   @override
   Widget build(BuildContext context) {

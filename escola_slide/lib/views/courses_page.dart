@@ -13,7 +13,7 @@ class CoursesPage extends StatefulWidget {
 }
 
 class _CoursesPageState extends State<CoursesPage> {
-  // final _courseRepository = ApiCourses();
+  int _currentCourseIndex = 0;
   List<CourseEntity> _courseItems;
 
   @override
@@ -21,6 +21,12 @@ class _CoursesPageState extends State<CoursesPage> {
     super.initState();
 
     Provider.of<CoursesManager>(context, listen: false).getAllCourses();
+  }
+
+  void onTabTapped(int index) {
+    setState(() {
+      _currentCourseIndex = index;
+    });
   }
 
   @override
@@ -60,7 +66,7 @@ class _CoursesPageState extends State<CoursesPage> {
                     columnCount: columnCount,
                     child: SlideAnimation(
                       child: FadeInAnimation(
-                        child: new CouseListItem(_courseItems[index]),
+                        child: new CourseListItem(_courseItems[index]),
                       ),
                     ),
                   );
@@ -79,7 +85,7 @@ class _CoursesPageState extends State<CoursesPage> {
                 duration: const Duration(milliseconds: 375),
                 child: ScaleAnimation(
                   child: FadeInAnimation(
-                    child: new CouseListItem(_courseItems[index]),
+                    child: new CourseListItem(_courseItems[index]),
                   ),
                 ),
               );

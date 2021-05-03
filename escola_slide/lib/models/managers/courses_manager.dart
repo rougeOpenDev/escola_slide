@@ -9,7 +9,7 @@ import 'package:dio/dio.dart';
 
 class CoursesManager extends ChangeNotifier {
   final List<CourseEntity> _courses = [];
-  final CourseEntity _courseDetail = null;
+  CourseEntity _courseDetail = null;
 
   // final storage = const FlutterSecureStorage();
   final ApiCourses endpointMenu = ApiCourses();
@@ -45,6 +45,24 @@ class CoursesManager extends ChangeNotifier {
       _courses.addAll((response.data as List<dynamic>)
           .map((menu) => CourseEntity.fromJson(menu))
           .toList());
+    } else {}
+
+    notifyListeners();
+    loading = false;
+  }
+
+  Future<void> getCourseDetails(CourseEntity course) async {
+    log('Getting detail course . . .');
+    loading = true;
+    final Dio dio = Dio();
+    // final token = await storage.read(key: 'token');
+    final response = await endpointMenu.getCourseDetails(
+        dio,
+        '\$2b\$10\$BZqF.T5fzqMKdPBpavvzAOoSGEh7GTRhLyJmhm3x.1VBNGWkmtEjq',
+        course.id);
+
+    if (response.statusCode == 200) {
+      _courseDetail = CourseEntity.fromJson(response.data);
     } else {}
 
     notifyListeners();
