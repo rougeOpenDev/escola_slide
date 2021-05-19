@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bloc/bloc.dart';
 
+import 'package:escola_slide/models/managers/courses_list_manager.dart';
 import 'package:escola_slide/models/managers/courses_manager.dart';
 import 'package:escola_slide/models/managers/user_manager.dart';
 import 'package:escola_slide/events/authentication_event.dart';
@@ -68,6 +69,10 @@ class App extends StatelessWidget {
         providers: [
           ChangeNotifierProvider(
             create: (_) => CoursesManager(),
+            lazy: true,
+          ),
+          ChangeNotifierProvider(
+            create: (_) => CoursesListManager(),
             lazy: true,
           ),
           ChangeNotifierProvider(

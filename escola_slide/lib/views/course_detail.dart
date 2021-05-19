@@ -25,7 +25,7 @@ class _CourseDetailState extends State<CourseDetail> {
   @override
   Widget build(BuildContext context) {
     return Consumer<CoursesManager>(builder: (_, coursesManager, __) {
-      var courseItem = widget._courseItem;
+      var courseItem = coursesManager.courseDetail;
 
       if (coursesManager.loading) {
         return Center(

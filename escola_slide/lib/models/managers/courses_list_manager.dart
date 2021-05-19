@@ -7,15 +7,14 @@ import 'package:escola_slide/models/entitys/course_entity.dart';
 import 'package:escola_slide/apis/api_courses.dart';
 import 'package:dio/dio.dart';
 
-class CoursesManager extends ChangeNotifier {
+class CoursesListManager extends ChangeNotifier {
   final List<CourseEntity> _courses = [];
-  CourseEntity _courseDetail = null;
 
   // final storage = const FlutterSecureStorage();
   final ApiCourses endpointMenu = ApiCourses();
   bool _loading = false;
 
-  CoursesManager() {}
+  CoursesListManager() {}
 
   bool get loading => _loading;
 
@@ -23,8 +22,6 @@ class CoursesManager extends ChangeNotifier {
     _loading = value;
     notifyListeners();
   }
-
-  CourseEntity get courseDetail => _courseDetail;
 
   List<CourseEntity> get courses => _courses;
 
@@ -45,23 +42,6 @@ class CoursesManager extends ChangeNotifier {
       _courses.addAll((response.data as List<dynamic>)
           .map((menu) => CourseEntity.fromJson(menu))
           .toList());
-    } else {}
-
-    loading = false;
-  }
-
-  Future<void> getCourseDetails(CourseEntity course) async {
-    log('Getting detail course . . .');
-    loading = true;
-    final Dio dio = Dio();
-    // final token = await storage.read(key: 'token');
-    final response = await endpointMenu.getCourseDetails(
-        dio,
-        '\$2b\$10\$BZqF.T5fzqMKdPBpavvzAOoSGEh7GTRhLyJmhm3x.1VBNGWkmtEjq',
-        course.id);
-
-    if (response.statusCode == 200) {
-      _courseDetail = CourseEntity.fromJson(response.data);
     } else {}
 
     loading = false;

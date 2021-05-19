@@ -26,9 +26,21 @@ class CourseEntity {
       this.contents});
 
   factory CourseEntity.fromJson(Map<String, dynamic> json) {
-    const List<CourseContentEntity> contents = [];
+    if (json['contents'] != null) {
+      List<CourseContentEntity> contents = (json['contents'] as List<dynamic>)
+          .map((content) => CourseContentEntity.fromJson(content))
+          .toList();
 
-    if (json['contents'] != null) {}
+      return new CourseEntity(
+          id: json['id'],
+          order: json['order'],
+          label: json['label'],
+          description: json['description'],
+          progress: json['progress'],
+          image64: json['image64'],
+          active: json['active'],
+          contents: contents);
+    }
 
     return new CourseEntity(
         id: json['id'],
@@ -38,6 +50,6 @@ class CourseEntity {
         progress: json['progress'],
         image64: json['image64'],
         active: json['active'],
-        contents: contents);
+        contents: []);
   }
 }
