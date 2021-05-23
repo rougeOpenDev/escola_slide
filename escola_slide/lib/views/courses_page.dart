@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:escola_slide/views/course_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,7 +17,7 @@ class CoursesPage extends StatefulWidget {
 }
 
 class _CoursesPageState extends State<CoursesPage> {
-  int _currentCourseIndex = 0;
+  int _currentCourseIndex = null;
   List<CourseEntity> _courseItems;
 
   @override
@@ -46,6 +49,14 @@ class _CoursesPageState extends State<CoursesPage> {
         );
       }
 
+      if (_currentCourseIndex != -1) {
+        log(_currentCourseIndex.toString());
+
+        // return CourseDetail(_courseItems[_currentCourseIndex]);
+      } else {
+        log(_currentCourseIndex.toString());
+      }
+
       return new Scaffold(
         appBar: new AppBar(
           title: new Text('Cursos'),
@@ -67,8 +78,31 @@ class _CoursesPageState extends State<CoursesPage> {
                     columnCount: columnCount,
                     child: SlideAnimation(
                       child: FadeInAnimation(
-                        child: new CourseListItem(_courseItems[index]),
-                      ),
+                          child: Padding(
+                              padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                              child: Center(
+                                  child: Card(
+                                color: Theme.of(context).cardColor,
+                                // RoundedRectangleBorder, BeveledRectangleBorder, StadiumBorder
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                      bottom: Radius.circular(5.0),
+                                      top: Radius.circular(5.0)),
+                                ),
+                                child: InkWell(
+                                  splashColor: Colors.blue.withAlpha(30),
+                                  onTap: () {
+                                    log(_currentCourseIndex.toString());
+                                    log(index.toString());
+                                    onTabTapped(index);
+                                  },
+                                  child: Container(
+                                    width: double.infinity,
+                                    height: 100,
+                                    child: Text(_courseItems[index].label),
+                                  ),
+                                ),
+                              )))),
                     ),
                   );
                 },
